@@ -38,7 +38,7 @@ exports.handler = function(event, context) {
             if(ids.length > 0) {
                 semaphore.terminate++;
                 var ec2 = new AWS.EC2(response.request.service.config);
-                var request = ec2.terminateInstances({DryRun:shouldTerminateInstances, InstanceIds:ids});	// Defaulting to DryRun true when terminating Instances
+                var request = ec2.terminateInstances({DryRun:!shouldTerminateInstances, InstanceIds:ids});	// Defaulting to DryRun true when terminating Instances
 
                 // Callback for successful terminate
                 request.on("success", function(response) {
