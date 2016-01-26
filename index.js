@@ -2,6 +2,7 @@ var AWS = require('aws-sdk');
 var apiVersion = "2015-10-01";
 var results = {};
 var semaphore = { "describe": 0, "terminate": 0};	// A quick and CPU cheap way to enforce asynchronous signaling (essentially a Promise)
+var shouldTerminateInstances = false; // For testing purposes
 
 /**
  * The "main" function which AWS Lambda executes.
@@ -37,7 +38,7 @@ exports.handler = function(event, context) {
             if(ids.length > 0) {
                 semaphore.terminate++;
                 var ec2 = new AWS.EC2(response.request.service.config);
-                var request = ec2.terminateInstances({DryRun:true, InstanceIds:ids});	// Defaulting to DryRun true when terminating Instances
+                var request = ec2.terminateInstances({DryRun:shouldTerminateInstances, InstanceIds:ids});	// Defaulting to DryRun true when terminating Instances
 
                 // Callback for successful terminate
                 request.on("success", function(response) {
