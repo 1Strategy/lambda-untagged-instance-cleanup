@@ -4,8 +4,8 @@ This is an example of an AWS Lambda function (index.js) that would identify EC2 
 
 ## Required IAM Permissions
 
-logs:CreateLogGroup
-logs:CreateLogStream
-logs:PutLogEvents
-ec2:DescribeInstances
-ec2:TerminateInstances
+- logs:CreateLogGroup
+- logs:CreateLogStream
+- logs:PutLogEvents
+- ec2:DescribeInstances
+- ec2:TerminateInstances
